@@ -5,6 +5,7 @@ from .models import Product
 
 
 class ProductAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('product_name',)}
     list_display = (
         'product_name',
         'price',
@@ -14,4 +15,4 @@ class ProductAdmin(admin.ModelAdmin):
         'is_available')
 
 
-admin.site.register(Product)
+admin.site.register(Product, ProductAdmin)
