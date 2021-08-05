@@ -64,6 +64,8 @@ def remove_bag_item(request, product_id):
 
 def bag(request, total=0, quantity=0, bag_items=None):
     try:
+        tax = 0
+        grand_total = 0
         bag = Bag.objects.get(bag_id=_bag_id(request))
         bag_items = BagItem.objects.filter(bag=bag, is_active=True)
         for bag_item in bag_items:
