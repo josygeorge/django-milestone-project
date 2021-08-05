@@ -69,8 +69,25 @@
                             </div>
                         </div> <!-- row.// -->
                         <hr>
-                        <a href="./product-detail.html" class="btn  btn-primary"> <span class="text">Add to cart</span>
-                            <i class="fas fa-shopping-cart"></i> </a>
+                        {% if single_product.stock <= 0 %}
+                        <b class='text-danger text-uppercase'>Out of stock</b>
+                        {% else %}
+                            {% if in_bag %}
+                            <a href="#" class="btn btn-success"> 
+                                <span class="text">Added to bag</span>
+                                <i class="fas fa-check"></i> 
+                            </a>
+                            <a href="{% url 'bag' %}" class="btn btn-outline-success"> 
+                                <span class="text">View your shopping bag</span>
+                                <i class="fas fa-eye"></i> 
+                            </a>
+                            {% else %}
+                            <a href="{% url 'add_bag' single_product.id %}" class="btn btn-primary"> 
+                                <span class="text">Add to bag</span>
+                                <i class="fas fa-shopping-cart"></i> 
+                            </a>
+                            {% endif %}
+                        {% endif %}
                     </article> <!-- product-info-aside .// -->
                 </main> <!-- col.// -->
             </div> <!-- row.// -->

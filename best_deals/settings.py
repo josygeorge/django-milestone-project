@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'home',
+    'accounts',
     'category',
-    'productstore'
+    'productstore',
+    'bag'
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'category.context_processors.menu_links',
+                'bag.context_processors.counter',
             ],
         },
     },
@@ -100,6 +103,8 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'best_deals.wsgi.application'
+
+# AUTH_USER_MODEL = 'accounts.Account'
 
 
 # Database
