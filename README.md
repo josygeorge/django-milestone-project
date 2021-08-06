@@ -1,4 +1,4 @@
-# Practical Python Project using Flask Micro Framework, June 04 -2021.
+# Full Stack Python Project using Django Framework, Aug 06 -2021.
 
 <!-- ASSIGNMENT INTRO -->
 <br />
