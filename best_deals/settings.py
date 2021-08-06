@@ -111,14 +111,11 @@ WSGI_APPLICATION = 'best_deals.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
-    'default': dj_database_url.parse('postgres://seikyxzwtfynoa:08ac6c3652d6a17d32e979d975d593c6a7a9260e3a705c504f6dd3be1b977275@ec2-52-0-67-144.compute-1.amazonaws.com:5432/dck1h1lnhtvt94')
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
