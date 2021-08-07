@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from productstore.models import Product
 from .models import Bag, BagItem
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -19,7 +20,7 @@ def add_bag(request, product_id):
     try:
         # fetching the Bag by it's id from the session variable
         bag = Bag.objects.get(bag_id=_bag_id(request))
-    except Bag.ObjectDoesNotExist:
+    except Bag.DoesNotExist:
         bag = Bag.objects.create(
             bag_id=_bag_id(request))
     bag.save()
@@ -66,8 +67,11 @@ def bag(request, total=0, quantity=0, bag_items=None):
     try:
         tax = 0
         grand_total = 0
-        bag = Bag.objects.get(bag_id=_bag_id(request))
-        bag_items = BagItem.objects.filter(bag=bag, is_active=True)
+        if request.user.is_authenticated:
+            bag_items = BagItem.objects.filter(user=request.user, is_active=True)
+        else:
+            bag = Bag.objects.get(bag_id=_bag_id(request))
+            bag_items = BagItem.objects.filter(bag=bag, is_active=True)
         for bag_item in bag_items:
             total += (bag_item.product.price * bag_item.quantity)
             quantity += bag_item.quantity
@@ -86,12 +90,16 @@ def bag(request, total=0, quantity=0, bag_items=None):
     return render(request, 'products/bag.html', context)
 
 
+@login_required(login_url='/accounts/login')
 def checkout(request, total=0, quantity=0, bag_items=None):
     try:
         tax = 0
         grand_total = 0
-        bag = Bag.objects.get(bag_id=_bag_id(request))
-        bag_items = BagItem.objects.filter(bag=bag, is_active=True)
+        if request.user.is_authenticated:
+            bag_items = BagItem.objects.filter(user=request.user, is_active=True)
+        else:
+            bag = Bag.objects.get(bag_id=_bag_id(request))
+            bag_items = BagItem.objects.filter(bag=bag, is_active=True)
         for bag_item in bag_items:
             total += (bag_item.product.price * bag_item.quantity)
             quantity += bag_item.quantity

@@ -1,7 +1,6 @@
 from django.db import models
 from productstore.models import Product
-# from accounts.models import Account
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -14,6 +13,7 @@ class Bag(models.Model):
 
 
 class BagItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     bag = models.ForeignKey(Bag, on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField()
